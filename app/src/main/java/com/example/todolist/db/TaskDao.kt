@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TaskDao {
 
-    @Query("Select * from task_table")
-    fun getTasks(): Flow<List<Task>> // asynchronous stream of data
+    @Query("SELECT * FROM task_table")
+    fun getTasks(): Flow<List<Task>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(task: Task)

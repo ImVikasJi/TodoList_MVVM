@@ -10,9 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
-@Database(
-    entities = [Task::class], version = 1
-)
+@Database(entities = [Task::class], version = 1)
 abstract class TaskDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
@@ -20,11 +18,11 @@ abstract class TaskDatabase : RoomDatabase() {
     class Callback @Inject constructor(
         private val database: Provider<TaskDatabase>,
         @ApplicationScope private val applicationScope: CoroutineScope
-    ): RoomDatabase.Callback(){
+    ) : RoomDatabase.Callback() {
+
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
 
-            // db operations
             val dao = database.get().taskDao()
 
             applicationScope.launch {
@@ -37,21 +35,4 @@ abstract class TaskDatabase : RoomDatabase() {
             }
         }
     }
-
-//    companion object {
-//        @Volatile
-//        private var instance: TaskDatabase? = null
-//        private val LOCK = Any()
-//
-//        operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
-//            instance ?: createDatabase(context).also { instance = it }
-//        }
-//
-//        private fun createDatabase(context: Context) =
-//            Room.databaseBuilder(
-//                context.applicationContext,
-//                TaskDatabase::class.java,
-//                "task_table_db.db"
-//            ).build()
-//    }
 }
