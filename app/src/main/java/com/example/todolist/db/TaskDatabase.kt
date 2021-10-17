@@ -32,6 +32,7 @@ abstract class TaskDatabase : RoomDatabase() {
                 dao.insert(Task("Be consistence", important = true))
                 dao.insert(Task("That is enough"))
                 dao.insert(Task("Time is everything"))
+                dao.insert(Task("Kotlin and Java Love"))
             }
         }
     }

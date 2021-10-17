@@ -13,6 +13,7 @@ import com.example.todolist.R
 import com.example.todolist.adapter.TaskAdapter
 import com.example.todolist.databinding.FragmentTasksBinding
 import com.example.todolist.util.onQueryTextChanged
+import com.example.todolist.viewmodel.SortOrder
 import com.example.todolist.viewmodel.TaskViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,25 +55,24 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
+        return when(item.itemId) {
             R.id.action_sort_by_name -> {
+                viewModel.sortOrder.value = SortOrder.BY_NAME
                 true
             }
-
             R.id.action_sort_by_date_created -> {
+                viewModel.sortOrder.value = SortOrder.BY_DATE
                 true
             }
-
             R.id.action_hide_completed_tasks -> {
-                item.isChecked = item.isChecked
-
+                item.isChecked = !item.isChecked
+                viewModel.hideCompleted.value = item.isChecked
                 true
             }
-
             R.id.action_delete_completed_tasks -> {
+
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
